@@ -2,4 +2,11 @@
 
 {% block content %}
 <p>{{perf.name}}</p>
+    {% for seat in seats%}
+        {% if seat.is_available %}
+            <button type="button" class="btn btn-secondary">{{seat.seat_num}}</button>
+        {% else %}
+            <button type="button" class="btn btn-danger">{{seat.seat_num}}</button>
+        {% endif %}
+    {% endfor %}
 {% endblock %}

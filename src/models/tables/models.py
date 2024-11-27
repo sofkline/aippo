@@ -1,5 +1,6 @@
-from src import app, db
+import datetime
 
+from src import app, db
 
 class TicketsTable(db.Model):
     __tablename__ = 'tickets'
@@ -29,9 +30,11 @@ class SeatsTable(db.Model):
 class PerformancesTable(db.Model):
     __tablename__ = 'performances'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False)
-    date = db.Column(db.String(255), nullable=False)
+    name = db.Column(db.String(100), nullable=False)
+    date = db.Column(db.String(50), nullable=False)
     cover = db.Column(db.String(50), nullable=False, default='default.jpg')
+    discription = db.Column(db.String(255))
+
 
 
 with app.app_context():

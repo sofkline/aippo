@@ -1,0 +1,62 @@
+[
+    {
+        "seat_num": 1,
+        "row_num": 1,
+        "price": 100,
+        "is_available": true
+    },
+    {
+        "seat_num": 2,
+        "row_num": 1,
+        "price": 100,
+        "is_available": true
+    },
+    {
+        "seat_num": 3,
+        "row_num": 1,
+        "price": 100,
+        "is_available": false
+    },
+    {
+        "seat_num": 4,
+        "row_num": 1,
+        "price": 100,
+        "is_available": true
+    },
+    {
+        "seat_num": 5,
+        "row_num": 1,
+        "price": 100,
+        "is_available": true
+    },
+    {
+        "seat_num": 6,
+        "row_num": 1,
+        "price": 100,
+        "is_available": false
+    },
+    {
+        "seat_num": 7,
+        "row_num": 1,
+        "price": 100,
+        "is_available": true
+    },
+    {
+        "seat_num": 8,
+        "row_num": 1,
+        "price": 100,
+        "is_available": true
+    },
+    {
+        "seat_num": 9,
+        "row_num": 1,
+        "price": 100,
+        "is_available": false
+    },
+    {
+        "seat_num": 10,
+        "row_num": 1,
+        "price": 100,
+        "is_available": true
+    }
+]
