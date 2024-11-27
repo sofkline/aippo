@@ -12,11 +12,12 @@ def index():
 def send_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
-@app.route("/<perf_name>")
+@app.route("/<perf_name>/hall")
 def perf(perf_name):
     perf = PerformancesTable.query.get_or_404(perf_name)
-    seats = SeatsTable.query.all()
-    return render_template("performance.html", perf=perf, seats=seats)
+    #seats = SeatsTable.query.all()
+    print(perf.seats)
+    return render_template("performance.html", perf=perf)
 
 @app.route("/tst")
 def tst():

@@ -19,7 +19,7 @@ def load_seats():
     with open('seats.json', encoding='utf8') as f:
         seats_json = json.load(f)
         for seat in seats_json:
-            seat = SeatsTable(seat_num=seat['seat_num'], price=seat['price'],
+            seat = SeatsTable(seat_num=seat['seat_num'], price=seat['price'], performance_id=seat['performance_id'],
                               row_num=seat['row_num'], is_available=seat['is_available'])
             with app.app_context():
                 db.session.add(seat)
