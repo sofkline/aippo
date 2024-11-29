@@ -6,8 +6,8 @@
         {% for perf in perfs %}
             <div class="card mb-3 m-3" style="max-width: 540px;">
                 <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="{{ url_for('send_file', filename=perf.cover) }}" alt="{{ perf.cover }}" class="img-fluid rounded-start">
+                    <div class="col-md-4 d-flex justify-content-center">
+                        <img style="object-fit: contain;" src="{{ url_for('send_file', filename=perf.cover) }}" alt="{{ perf.cover }}" class="img-fluid rounded-start">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">

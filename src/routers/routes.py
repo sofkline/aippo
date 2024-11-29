@@ -15,13 +15,9 @@ def send_file(filename):
 @app.route("/<perf_name>/hall")
 def perf(perf_name):
     perf = PerformancesTable.query.get_or_404(perf_name)
-    #seats = SeatsTable.query.all()
-    print(perf.seats)
-    return render_template("performance.html", perf=perf)
+    seats = SeatsTable.query.filter_by(performance_id=perf.id).all()
+    print(perf.id)
+    return render_template("performance.html", seats=seats)
 
-@app.route("/tst")
-def tst():
-    perfs = PerformancesTable.query.all()
-    return render_template("tst.html", perfs=perfs)
 
 

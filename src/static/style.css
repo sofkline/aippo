@@ -1,1 +1,11 @@
-.background_img(
+.background_img{
+    background-image: url('palace.jpg');
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.btn-size-fix {
+    width: 40px;
+    height: 40px;
+}

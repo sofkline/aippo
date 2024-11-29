@@ -1,6 +1,5 @@
-import datetime
-
 from src import app, db
+
 
 class TicketsTable(db.Model):
     __tablename__ = 'tickets'
@@ -23,7 +22,6 @@ class ClientsTable(db.Model):
         return f"ClientsTable {ClientsTable.id}"
 
 
-
 class SeatsTable(db.Model):
     __tablename__ = 'seats'
     id = db.Column(db.Integer, primary_key=True)
@@ -31,13 +29,11 @@ class SeatsTable(db.Model):
     row_num = db.Column(db.Integer)
     price = db.Column(db.Integer)
     is_available = db.Column(db.Boolean, default=True)
+    performance_id = db.Column(db.Integer, db.ForeignKey('performances.id'), nullable=False)
 
     def __repr__(self):
-        return f"ClientsTable {ClientsTable.id}"
+        return f"SeatsTable {SeatsTable.id}"
 
-class HallTable(db.Model):
-    __tablename = 'halls'
-    id = db.Column(db.Integer, primary_key=True)
 
 class PerformancesTable(db.Model):
     __tablename__ = 'performances'
@@ -46,9 +42,12 @@ class PerformancesTable(db.Model):
     date = db.Column(db.String(50), nullable=False)
     cover = db.Column(db.String(50), nullable=False, default='default.jpg')
     discription = db.Column(db.String(255))
+    seats = db.relationship('SeatsTable', backref='performances', lazy=True)
+
+    #seat = db.relationship('SeatsTable', backref='performances', lazy=True)
 
     def __repr__(self):
-        return f"ClientsTable {ClientsTable.id}"
+        return f"PerformancesTable {ClientsTable.id}"
 
 
 

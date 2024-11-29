@@ -1,13 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-<p>{{perf.name}}</p>
-    {% for perf in perfs %}
-        <p>a</p>
-        {% if perf.seats.is_available %}
-            <button type="button" class="btn btn-secondary">{{perf.seats.seat_num}}</button>
-        {% else %}
-            <button type="button" class="btn btn-danger">{{perf.seats.seat_num}}</button>
-        {% endif %}
-    {% endfor %}
+        {% for seat in seats %}
+            {% if seat.seat_num % 10 == 1 %}
+                <br>
+            {% endif %}
+            {% if seat.is_available %}
+            <button type="button" id="button" class="btn btn-secondary btn-size-fix" onclick="toggleColor(this)">{{seat.seat_num}}</button>
+            {% else %}
+            <button style="pointer-events: none;"  type="button" class="btn btn-danger btn-size-fix">{{seat.seat_num}}</button>
+            {% endif %}
+        {% endfor %}
 {% endblock %}
