@@ -6,9 +6,40 @@
                 <br>
             {% endif %}
             {% if seat.is_available %}
-            <button type="button" id="button" class="btn btn-secondary btn-size-fix" onclick="toggleColor(this)">{{seat.seat_num}}</button>
+            <button type="button" id="{{ seat.id }}" class="btn btn-secondary btn-size-fix" onclick="toggleColor(this)">{{seat.seat_num}}</button>
             {% else %}
             <button style="pointer-events: none;"  type="button" class="btn btn-danger btn-size-fix">{{seat.seat_num}}</button>
             {% endif %}
         {% endfor %}
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ConfirmChoice">ПОДТВЕРДИТЬ ВЫБОР МЕСТ</button>
+        <div class="modal fade modal-dialog modal-dialog-centered" id="ConfirmChoice">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5>Подтвердить выбор мест</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id = 'form'>
+                            <div class="mb-3">
+                                <label for="email" class="col-form-label">Почта</label>
+                                <input type="email" class="form-control" name="email" id="email">
+                            </div>
+                            <div class="mb-3">
+                                <label for="name" class="col-form-label">Имя</label>
+                                <input type="text" class="form-control" name="name" id="name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="surname" class="col-form-label">Фамилия</label>
+                                <input type="text" class="form-control" name="surname" id="surname">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                <button type="submit" class="btn btn-primary" onclick="confirmChoice()">Подтвердить</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 {% endblock %}
