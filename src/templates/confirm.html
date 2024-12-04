@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form action="confirmOrder" method="post" class="centered-div row g-2">
+        {% for msg in get_flashed_messages() %}
+        <div style="background-color: red">{{msg}}</div>
+        {% endfor %}
+        <div class="col-md-5">
+            <input type="text" class="form-control" placeholder="Имя" name="name">
+        </div>
+        <div class="col-md-5">
+            <input type="text" class="form-control" placeholder="Фамилия" name="surname">
+        </div>
+        <div class="col-10">
+            <input type="email" class="form-control" placeholder="Почта" name="email">
+        </div>
+        <div class="d-grip gap-2 d-md-block">
+            <button class="btn btn-success" type="submit" name="action" value="submit">Подтвердить заказ</button>
+            <button class="btn btn-danger" name="action" value="cancel">Отмена</button>
+        </div>
+    </form>
+{% if message %}
+    <p> {{ message }}</p>
+{% endif %}
+
+    {% for seat in activeSeats %}
+        <p>{{seat}}</p>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+        {% for seat in seats %}
+            {% if seat.seat_num % 10 == 1 %}
+                <br>
+            {% endif %}
+            {% if seat.is_available %}
+            <button type="button" id="{{ seat.id }}" class="btn btn-secondary btn-size-fix" onclick="toggleColor(this)">{{seat.seat_num}}</button>
+            {% else %}
+            <button style="pointer-events: none;"  type="button" class="btn btn-danger btn-size-fix">{{seat.seat_num}}</button>
+            {% endif %}
+        {% endfor %}
+        {% for msg in messages %}
+        <div style="background-color: red">{{msg}}</div>
+        {% endfor %}
+        <a href="{{ url_for('confirm') }}">
+            <button class="btn btn-success" onclick="getActiveSeats()">ПОДТВЕРДИТЬ ВЫБОР МЕСТ</button>
+        </a>
+{% endblock %}

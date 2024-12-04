@@ -1,48 +1,68 @@
-from src import app
-from src.models.tables.models import PerformancesTable, SeatsTable
-from flask import render_template, send_from_directory, request
+from src import app, db
+from flask import render_template, send_from_directory, request, redirect, url_for, flash
+from src.repo.rep import dbHelper
+from src.utils.functions import check_input
 
 
-@app.route("/")
+dbase = dbHelper()
+
+# Главная страница
+@app.route("/", methods=['GET', 'POST'])
 def index():
-    perfs = PerformancesTable.query.all()
+    perfs = dbase.getAllPerfs()
     return render_template("home.html", perfs=perfs)
 
+
+# Функция для загрузки изображений для предтсавлений
 @app.route('/uploads/<filename>')
 def send_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
-@app.route("/<perf_name>/hall")
-def perf(perf_name):
-    perf = PerformancesTable.query.get_or_404(perf_name)
-    seats = SeatsTable.query.filter_by(performance_id=perf.id).all()
-    print(perf.id)
-    return render_template("performance.html", seats=seats)
+
+# Страница с изображением мест
+@app.route("/<perf_id>/hall")
+def perf(perf_id):
+    seats = dbase.getSeatsForPerf(perf_id)
+    return render_template("hall.html", seats=seats)
 
 
-active_buttons_id = []
-@app.route('/toggleColor', methods=['POST'])
-def toggle_color():
-    data = request.get_json()
-    button_id = data['button_id']
-    if button_id not in active_buttons_id:
-        active_buttons_id.append(button_id)
-        print(button_id + 'added')
-    elif button_id in active_buttons_id:
-        active_buttons_id.remove(button_id)
-        print(button_id + 'extended')
-    print(active_buttons_id)
-    # Сохраняем данные о нажатой кнопке в базе данных
+activeSeats = []
+@app.route('/getActiveSeats', methods=['GET', 'POST'])
+def getActiveSeats():
+    if request.method == 'POST':
+        data = request.get_json()
+        global activeSeats
+        activeSeats = data.get('seats')
     return '', 200
 
-@app.route('/confirmChoice', methods=['GET', 'POST'])
+
+# Страница с заполнением данных и подтверждением выбора мест
+@app.route('/confirm')
+def confirm():
+    #if len(activeSeats) == 0: сделать логику на случай, если юзер не выбрал ни одного места
+     #   flash('Выберите места!')
+      #  return redirect(url_for('perf'))
+    return render_template('confirm.html', activeSeats=activeSeats)
+
+
+@app.route('/confirmOrder', methods=['POST', 'GET'])
 def confirm_order():
     if request.method == 'POST':
-        print(228)
-        data = request.get_json()
-        name = data['name']
-        print(name)
+        global activeSeats
+        if request.form['action'] == 'submit':
+            name = request.form.get('name')
+            surname = request.form.get('surname')
+            email = request.form.get('email')
+
+            check_input(name=name, surname=surname, email=email, activeSeats=activeSeats)
+            dbase.addClient(name=name, surname=surname, email=email)
+
+            for seat in activeSeats:
+                dbase.addTicket(seat_id=seat, client_id=dbase.getClientIdByEmail(email=email))
+            tickinfo = dbase.getTicketsInfo()
+            return render_template('tickets.html', tickets=tickinfo)
+
+        elif request.form['action'] == 'cancel':
+            activeSeats = []
+            return redirect(url_for('index'))
     return '', 200
-
-
-

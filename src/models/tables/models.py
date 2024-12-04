@@ -5,6 +5,8 @@ class TicketsTable(db.Model):
     __tablename__ = 'tickets'
     id = db.Column(db.Integer, primary_key=True)
     seat_id = db.Column(db.Integer, db.ForeignKey('seats.id'))
+    client_id = db.Column(db.Integer, db.ForeignKey('clients.id'))
+
 
     def __repr__(self):
         return f"TicketsTable {TicketsTable.id}"
@@ -15,8 +17,8 @@ class ClientsTable(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     surname = db.Column(db.String, nullable=False)
-    patronymic = db.Column(db.String, nullable=True)
-    ticket_id = db.Column(db.Integer, db.ForeignKey('tickets.id'))
+    email = db.Column(db.String, nullable=False)
+    ticket_id = db.relationship('TicketsTable', backref='clients')
 
     def __repr__(self):
         return f"ClientsTable {ClientsTable.id}"
@@ -30,6 +32,7 @@ class SeatsTable(db.Model):
     price = db.Column(db.Integer)
     is_available = db.Column(db.Boolean, default=True)
     performance_id = db.Column(db.Integer, db.ForeignKey('performances.id'), nullable=False)
+    ticket_id = db.relationship('TicketsTable', backref='seats')
 
     def __repr__(self):
         return f"SeatsTable {SeatsTable.id}"
@@ -44,10 +47,8 @@ class PerformancesTable(db.Model):
     discription = db.Column(db.String(255))
     seats = db.relationship('SeatsTable', backref='performances', lazy=True)
 
-    #seat = db.relationship('SeatsTable', backref='performances', lazy=True)
-
     def __repr__(self):
-        return f"PerformancesTable {ClientsTable.id}"
+        return f"PerformancesTable {PerformancesTable.id}"
 
 
 
