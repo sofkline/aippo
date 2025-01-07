@@ -7,7 +7,7 @@ import json, random
 
 
 def load_perfs():
-    with open('static/Performances.json', encoding="utf8") as f:
+    with open('../static/Performances.json', encoding="utf8") as f:
         performances_json = json.load(f)
         for perf in performances_json:
             perf = PerformancesTable(name=perf['name'], date=perf['date'], discription=perf['discription'],

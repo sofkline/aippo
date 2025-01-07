@@ -4,16 +4,38 @@ from src.repo.rep import dbHelper
 from src.utils.functions import check_input
 
 
+class RouteFactory:
+    @staticmethod
+    def create_route(route_type, **kwargs):
+        if route_type == 'index':
+            return lambda: render_template("home.html", perfs=kwargs.get('perfs'))
+        elif route_type == 'hall':
+            return lambda: render_template("hall.html", seats=kwargs.get('seats'))
+        elif route_type == 'confirm':
+            return lambda: render_template('confirm.html', activeSeats=kwargs.get('activeSeats'))
+        elif route_type == 'admin':
+            return lambda: render_template('admin.html', perfs=kwargs.get('perfs'))
+        else:
+            raise ValueError(f"Unknown route type: {route_type}")
+
+
 dbase = dbHelper()
 
 # Главная страница
 @app.route("/", methods=['GET', 'POST'])
 def index():
     perfs = dbase.getAllPerfs()
-    return render_template("home.html", perfs=perfs)
+    route = RouteFactory.create_route('index', perfs=perfs)
+    return route()
 
 
-# Функция для загрузки изображений для предтсавлений
+@app.route('/admin', methods=['GET', 'POST'])
+def admin():
+    perfs = dbase.getAllPerfs()
+    route = RouteFactory.create_route('admin', perfs=perfs)
+    return route()
+
+# Функция для загрузки изображений для представлений
 @app.route('/uploads/<filename>')
 def send_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
@@ -39,9 +61,6 @@ def getActiveSeats():
 # Страница с заполнением данных и подтверждением выбора мест
 @app.route('/confirm')
 def confirm():
-    #if len(activeSeats) == 0: сделать логику на случай, если юзер не выбрал ни одного места
-     #   flash('Выберите места!')
-      #  return redirect(url_for('perf'))
     return render_template('confirm.html', activeSeats=activeSeats)
 
 
@@ -55,6 +74,7 @@ def confirm_order():
             email = request.form.get('email')
 
             check_input(name=name, surname=surname, email=email, activeSeats=activeSeats)
+            print(name, surname, email)
             dbase.addClient(name=name, surname=surname, email=email)
 
             for seat in activeSeats:

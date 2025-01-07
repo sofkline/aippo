@@ -31,7 +31,7 @@ class dbHelper:
                 print('addTicket: Билет уже есть в БД.')
         except:
             print('addTicket: Ошибка добавления')
-        return []
+
 
     def addClient(self, name, surname, email):
         try:
@@ -91,7 +91,7 @@ class dbHelper:
                 perf = PerformancesTable.query.filter_by(id=seat.performance_id).first()
                 perf_name = perf.name
                 data = {'client_name': client_name,
-                        'client_surname:': client_surname,
+                        'client_surname': client_surname,
                         'client_email': client_email,
                         'seat_num': seat_num,
                         'perf_name': perf_name}
