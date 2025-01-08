@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Добавить новое представление</h1>
+
+<form method="POST">
+    <div>
+        <label for="name">Название представления</label>
+        <input type="text" id="name" name="name" required>
+    </div>
+    <div>
+        <label for="age_restriction">Возрастное ограничение</label>
+        <input type="number" id="age_restriction" name="age_restriction" required>
+    </div>
+    <div>
+        <label for="cover">Обложка</label>
+        <input type="text" id="cover" name="cover">
+    </div>
+    <div>
+        <button type="submit">Добавить</button>
+    </div>
+</form>
+
+{% endblock %}
