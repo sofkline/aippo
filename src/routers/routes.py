@@ -29,12 +29,6 @@ def index():
     return route()
 
 
-@app.route('/admin', methods=['GET', 'POST'])
-def admin():
-    perfs = dbase.getAllPerfs()
-    route = RouteFactory.create_route('admin', perfs=perfs)
-    return route()
-
 # Функция для загрузки изображений для представлений
 @app.route('/uploads/<filename>')
 def send_file(filename):
@@ -74,8 +68,9 @@ def confirm_order():
             email = request.form.get('email')
 
             check_input(name=name, surname=surname, email=email, activeSeats=activeSeats)
-            print(name, surname, email)
             dbase.addClient(name=name, surname=surname, email=email)
+
+
 
             for seat in activeSeats:
                 dbase.addTicket(seat_id=seat, client_id=dbase.getClientIdByEmail(email=email))
