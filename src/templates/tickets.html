@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title%} Tickets {% endblock %}
+{% block content %}
+    {% for ticket in tickets %}
+        <p>Name: {{ticket['client_name']}} Surname: {{ticket['client_surname']}} Email: {{ticket['client_email']}}</p>
+        <p>Perf Name: {{ticket['perf_name']}} SeatNum: {{ticket['seat_num']}} </p>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <title>Admin Panel</title>
+<body>
+    <div class="row" style="display: flex; align-items: center; justify-content: center;">
+        {% for perf in perfs %}
+            <div class="card mb-3 m-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4 d-flex justify-content-center">
+                        <img style="object-fit: contain;" src="{{ url_for('send_file', filename=perf.cover) }}" alt="{{ perf.cover }}" class="img-fluid rounded-start">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{perf.name}}</h5>
+                            <p class="card-text">Тут должен быть perf.title</p>
+                            <a href="{{ url_for('perf', perf_id=perf.id) }}" class="stretched-link"></a>
+                            <p class="card-text"><small class="text-muted">{{perf.date}}</small></p>
+                        </div>
+                    </div>
+                    <div>
+                        <button>Редактировать</button>
+                        <button>Удалить</button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+    <button onclick="addPerformance()">Add Performance</button>
+{% endblock %}
